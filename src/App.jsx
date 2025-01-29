@@ -6,6 +6,7 @@ const App = () => {
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 768) setSidebar(true);
+      else setSidebar(false );
     }
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -14,7 +15,7 @@ const App = () => {
 
   return (
     <div className="flex">
-      <div className="transition-all delay-100 md:w-96 w-10 h-screen">
+      <div className="transition-all delay-100 md:w-96 w-20 h-screen">
         {sidebar ? <Bar /> : <Menu />}
       </div>
       <div className="w-full bg-green-600 h-screen">Content</div>
