@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [sidebar, setSidebar] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 768) setSidebar(true);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, [sidebar]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex">
+      <div className="transition-all delay-100 md:w-96 w-10 h-screen">
+        {sidebar ? <Bar /> : <Menu />}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div className="w-full bg-green-600 h-screen">Content</div>
+    </div>
+  );
+};
+
+function Bar() {
+  return (
+    <div>
+      <div>Icon</div>
+      <div>Icon</div>
+      <div>Icon</div>
+    </div>
+  );
 }
 
-export default App
+function Menu() {
+  return (
+    <div className="mt-5 mx-3 flex justify-between items-center">
+      <div className="overflow-hidden">
+        <button className="px-5 py-3 rounded-2xl bg-blue-800 text-white cursor-pointer delay-100 hover:bg-blue-600 hover:outline-0">
+          welcome
+        </button>
+      </div>
+
+      <Avatar />
+    </div>
+  );
+}
+
+function Avatar() {
+  return (
+    <div className="inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex-shrink-0">
+      <span className="font-medium text-gray-600 dark:text-gray-300">A</span>
+    </div>
+  );
+}
+
+export default App;
